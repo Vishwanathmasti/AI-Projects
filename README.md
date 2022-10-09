@@ -1,2 +1,2 @@
-"# AI-Projects" 
-"# AI-Projects" 
+#ML techniques for prediction of human illness
+
