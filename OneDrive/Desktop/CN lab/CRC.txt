@@ -1,0 +1,75 @@
+package src.bin;
+import java.util.*;
+public class crc 
+{
+	public static void main(String[] args)
+	{
+		int message[]=new int[100];
+		int b[]=new int[100];
+		int len,k;
+		crc ob=new crc();
+		System.out.println("Enter the length of data Frame:");
+		Scanner sc=new Scanner(System.in);
+		len=sc.nextInt();
+		int flag=0;
+		System.out.println("Enter the messsage: ");
+		for(int i=0;i<len;i++)
+		{
+			message[i]=sc.nextInt();
+		}
+		for(int i=0;i<17;i++)
+		{
+			message[len++]=0;
+		}
+		k=len-17;
+		for(int i=0;i<len;i++)
+		{
+			b[i]=message[i];
+		}
+		ob.div(message,k);
+		for(int i=0;i<len;i++)
+			message[i]=message[i]^b[i];
+		System.out.println("Data to be transmitted: ");
+		for(int i=0;i<len;i++)
+		{
+			System.out.print(message[i]+" ");
+		}
+		System.out.println();
+		System.out.println("Enter the revieved data:");
+		for(int i=0;i<len;i++)
+		{
+			message[i]=sc.nextInt();
+		}
+		ob.div(message,k);
+		for(int i=0;i<len;i++)
+		{
+			if(message[i]!=0)
+			{
+				flag=1;break;
+			}
+		}
+		if(flag==1)
+			System.out.println("Error in data");
+		else
+			System.out.println("No error");
+		sc.close();
+	}
+	void div(int a[],int k)
+	{
+		int gp[]= {1,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,1};
+		int count=0;
+		for(int i=0;i<k;i++)
+		{
+			if(a[i]==1)
+			{
+				for(int j=i;j<17+i;j++)
+				{
+					a[j]=a[j]^gp[count++];
+				}
+				count=0;
+			}
+		}
+	}
+	
+
+}
